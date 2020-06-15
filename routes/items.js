@@ -39,7 +39,7 @@ router.patch("/:name", function(req, res, next) {
 
 router.delete("/:name", function(req, res, next) {
   try {
-    let item = Item.deleteItem(req.params.name);
+    Item.deleteItem(req.params.name);
     return res.json({message: "Deleted"});
   } catch(e) {
     return next(e);
