@@ -5,35 +5,35 @@ class Item {
     constructor(name, price) {
         this.name = name;
         this.price = price;
-        items.push(item);
+        items.push(this);
     }
 
-    getItems() {
+    static getItems() {
         return items
     }
 
-    getItem(name) {
+    static getItem(name) {
         let item = items.find(i => i.name === name);
         if(item === undefined){
-            throw new Error("Item not found", 404);
+            throw {message: "Not Found", status: 404}
         }
         return item;
     }
 
-    updateItem(name, newItem) {
+    static updateItem(name, newItem) {
         let item = items.find(i => i.name === name);
-        if(items.name === undefined){
-            throw new Error("Item not found", 404);
+        if(item === undefined){
+            throw {message: "Not Found", status: 404}
         }
         item.name = newItem.name;
         item.price = newItem.price;
         return item;
     }
 
-    deleteItem(name) {
+    static deleteItem(name) {
         let idx = items.findIndex(i => i.name === name);
-        if(items.name === -1){
-            throw new Error("Item not found", 404);
+        if(idx === -1){
+            throw {message: "Not Found", status: 404}
         }
         items.splice(idx, 1);
     }

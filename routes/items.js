@@ -2,7 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const Item = require('../item');
 
-router.get("/", function(req, res, next) {
+router.get('', function(req, res, next) {
   try {
     return res.json({items: Item.getItems()});
   } catch(e) {
@@ -10,16 +10,16 @@ router.get("/", function(req, res, next) {
   }
 });
 
-router.post("/", function(req, res, next) {
+router.post('', function(req, res, next) {
   try {
-    let newItem = new Item(req.body.name, req.body.price);
-    return res.json({"added": {newItem}});
+    let added = new Item(req.body.name, req.body.price);
+    return res.json({added});
   } catch(e) {
     return next(e);
   }
 });
 
-router.get("/:name", function(req, res, next) {
+router.get('/:name', function(req, res, next) {
   try {
     let item = Item.getItem(req.params.name);
     return res.json({item});
@@ -28,16 +28,17 @@ router.get("/:name", function(req, res, next) {
   }
 });
 
-router.patch("/:name", function(req, res, next) {
+router.patch('/:name', function(req, res, next) {
   try {
+    debugger;
     let item = Item.updateItem(req.params.name, req.body);
-    return res.json({"udpated": {item}});
+    return res.json({"updated": {item}});
   } catch(e) {
     return next(e);
   }
 });
 
-router.delete("/:name", function(req, res, next) {
+router.delete('/:name', function(req, res, next) {
   try {
     Item.deleteItem(req.params.name);
     return res.json({message: "Deleted"});

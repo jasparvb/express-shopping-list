@@ -3,7 +3,7 @@ const request = require("supertest");
 const app = require("../app");
 let items = require("../fakeDb")
 
-let item = { name: "peanut butter", price:3.00 }
+let item = { name: "candy", price: 3.00 }
 
 beforeEach(async () => {
   items.push(item)
@@ -15,7 +15,7 @@ afterEach(async () => {
 
 /** GET all items */
 
-describe("GET /items", async function () {
+describe("GET /items", function () {
   test("Returns list of items", async function () {
     const res = await request(app).get(`/items`);
     const { items } = res.body;
@@ -28,7 +28,7 @@ describe("GET /items", async function () {
 
 /** GET item by name */
 
-describe("GET /items/:name", async function () {
+describe("GET /items/:name", function () {
   test("Gets a single item", async function () {
     const res = await request(app).get(`/items/${item.name}`);
     expect(res.statusCode).toBe(200);
@@ -40,19 +40,18 @@ describe("GET /items/:name", async function () {
     expect(res.statusCode).toBe(404);
   });
 });
-// end
 
 
 /** POST create new item */
 
-describe("POST /items", async function () {
+describe("POST /items", function () {
   test("Creates a new item", async function () {
     const res = await request(app).post(`/items`).send({name: "Pizza", price: 2.00});
     expect(res.statusCode).toBe(200);
-    expect(res.body.item).toHaveProperty("name");
-    expect(res.body.item).toHaveProperty("price");
-    expect(res.body.item.name).toEqual("Pizza");
-    expect(res.body.item.price).toEqual(2.00);
+    expect(res.body.added).toHaveProperty("name");
+    expect(res.body.added).toHaveProperty("price");
+    expect(res.body.added.name).toEqual("Pizza");
+    expect(res.body.added.price).toEqual(2.00);
   });
 });
 // end
@@ -60,11 +59,11 @@ describe("POST /items", async function () {
 
 /** PATCH update an item by name */
 
-describe("PATCH /items/:name", async function () {
+describe("PATCH /items/:name", function () {
   test("Updates a single item", async function () {
-    const res = await request(app).patch(`/items/${item.name}`).send({name: "Troll"});
+    const res = await request(app).patch(`/items/${item.name}`).send({name: "Pasta", price: 3.00});
     expect(res.statusCode).toBe(200);
-    expect(res.body.item).toEqual({name: "Troll"});
+    expect(res.body.updated.item).toEqual({name: "Pasta", price: 3.00});
   });
 
   test("Responds with 404 if can't find item", async function () {
@@ -77,7 +76,7 @@ describe("PATCH /items/:name", async function () {
 
 /** DELETE delete an item by name */
 
-describe("DELETE /items/:name", async function () {
+describe("DELETE /items/:name", function () {
   test("Deletes a single a item", async function () {
     const res = await request(app).delete(`/items/${item.name}`);
     expect(res.statusCode).toBe(200);
