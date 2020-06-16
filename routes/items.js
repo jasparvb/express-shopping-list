@@ -30,7 +30,6 @@ router.get('/:name', function(req, res, next) {
 
 router.patch('/:name', function(req, res, next) {
   try {
-    debugger;
     let item = Item.updateItem(req.params.name, req.body);
     return res.json({"updated": {item}});
   } catch(e) {
