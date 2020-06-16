@@ -82,5 +82,9 @@ describe("DELETE /items/:name", function () {
     expect(res.statusCode).toBe(200);
     expect(res.body).toEqual({ message: "Deleted" });
   });
+  test("Responds with 404 if can't find item", async function () {
+    const res = await request(app).delete(`/items/dsfdss`);
+    expect(res.statusCode).toBe(404);
+  });
 });
 
